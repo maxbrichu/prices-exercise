@@ -17,12 +17,16 @@ public class GetPriceController {
         this.provider = provider;
     }
 
-    @GetMapping("/get_price/{brand_id}/{product_id}/{datetime}")
+    @GetMapping("/get_price/{brand_id}/{product_id}/{date}")
     public @ResponseBody
     String get_price(@PathVariable(value = "brand_id") int brand_id,
                      @PathVariable(value = "product_id") int product_id,
-                     @PathVariable(value = "datetime") String date) {
-        Price price = provider.get_price(brand_id, product_id, date);
-        return price.toJsonObject();
+                     @PathVariable(value = "date") String date) {
+        try {
+            Price price = provider.get_price(brand_id, product_id, date);
+            return price.toJsonObject();
+        }catch (Exception e){
+            return "An unexpected error occurred: " + e.getMessage();
+        }
     }
 }

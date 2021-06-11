@@ -2,6 +2,7 @@ package com.example.pricesexercise.delivery.controller;
 
 import com.example.pricesexercise.core.action.GetPrice;
 import com.example.pricesexercise.core.domain.Price;
+import com.example.pricesexercise.core.domain.PriceException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import static com.example.pricesexercise.delivery.controller.PricesFixture.*;
+import static com.example.pricesexercise.PricesFixture.*;
 
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GetPriceTests {
+class GetPriceControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
@@ -30,13 +31,13 @@ class GetPriceTests {
     MvcResult mvcResult;
 
     @Test
-    void get_price_for_a_datetime_successfully() throws Exception {
-        given_a_mocked_price_for_a_request(a_datetime, a_price);
-        when_get_price(a_datetime);
+    void get_price_successfully() throws Exception {
+        given_a_mocked_price_for_a_request(a_date, a_price);
+        when_get_price(a_date);
         then_get(a_price);
     }
 
-    private void given_a_mocked_price_for_a_request(String date, Price response) {
+    private void given_a_mocked_price_for_a_request(String date, Price response) throws PriceException {
         when(getPrice.execute(a_brand_id, a_product_id, date)).thenReturn(response);
     }
 
