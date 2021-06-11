@@ -7,6 +7,6 @@ import java.util.Date;
 
 @Repository
 public interface PricesRepository {
-    Price get(int brand_id, int product_id, Date date);
+    Price get(int brandId, int productId, Date date);
     void add(Price price);
 }

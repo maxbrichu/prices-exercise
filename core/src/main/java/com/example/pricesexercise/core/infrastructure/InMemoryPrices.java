@@ -11,12 +11,11 @@ public class InMemoryPrices implements PricesRepository {
     List<Price> prices = new ArrayList<>();
 
     @Override
-    public Price get(int brand_id, int product_id, Date date) {
+    public Price get(int brandId, int productId, Date date) {
         return prices.stream()
-                .filter(price -> price.has_ids(brand_id, product_id))
+                .filter(price -> price.compareIds(brandId, productId))
                 .findFirst()
                 .orElse(null);
-                // .filter(price -> price.)
     }
 
     @Override

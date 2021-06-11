@@ -16,8 +16,8 @@ public class Provider {
         this.getPrice = getPrice;
     }
 
-    public Price get_price(int brand_id, int product_id, String date) throws PriceException {
-        return this.getPrice.execute(brand_id, product_id, date);
+    public Price get_price(int brandId, int productId, String date) throws PriceException {
+        return this.getPrice.execute(brandId, productId, date);
     }
 
 }

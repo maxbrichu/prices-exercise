@@ -19,11 +19,15 @@ public class GetPrice {
         this.prices = prices;
     }
 
-    public Price execute(int brand_id, int product_id, String _date ) throws PriceException {
-        SimpleDateFormat string_format = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
+    public Price execute(int brandId, int productId, String dateString ) throws PriceException {
+        SimpleDateFormat stringFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
         try {
-            Date date = string_format.parse(_date);
-            return this.prices.get(brand_id, product_id, date);
+            Date date = stringFormat.parse(dateString);
+            Price price = this.prices.get(brandId, productId, date);
+            if (price == null) {
+                throw new PriceException("Not found");
+            }
+            return price;
         }
         catch (ParseException e){
             throw new PriceException("Invalid Date");

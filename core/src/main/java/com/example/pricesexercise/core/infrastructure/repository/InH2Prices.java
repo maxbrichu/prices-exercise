@@ -8,7 +8,7 @@ import java.util.Date;
 public class InH2Prices implements PricesRepository {
 
     @Override
-    public Price get(int brand_id, int product_id, Date date) {
+    public Price get(int brandId, int productId, Date date) {
         return null;
     }
 

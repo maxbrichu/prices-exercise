@@ -36,23 +36,23 @@ public class Price {
 
     @Override
     public boolean equals(Object obj) {
-        if (is_a_price(obj)) {
+        if (isAPrice(obj)) {
             final Price other = (Price) obj;
-            return has_ids(other.brandId, other.productId)
-                    && has_dates(other.startDate, other.endDate);
+            return compareIds(other.brandId, other.productId)
+                    && compareDates(other.startDate, other.endDate);
         }
         return false;
     }
 
-    private boolean is_a_price(Object obj) {
+    private boolean isAPrice(Object obj) {
         return (obj != null) && (obj.getClass() == this.getClass());
     }
 
-    public boolean has_ids(int brand_id, int product_id) {
-        return (this.brandId == brand_id) && (this.productId == product_id);
+    public boolean compareIds(int brandId, int productId) {
+        return (this.brandId == brandId) && (this.productId == productId);
     }
 
-    public boolean has_dates(String startDate, String endDate){
+    public boolean compareDates(String startDate, String endDate){
         return this.startDate.equals(startDate) && (this.endDate.equals(endDate));
     }
 }

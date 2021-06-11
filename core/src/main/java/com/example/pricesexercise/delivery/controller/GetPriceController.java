@@ -3,30 +3,35 @@ package com.example.pricesexercise.delivery.controller;
 import com.example.pricesexercise.core.Provider;
 import com.example.pricesexercise.core.domain.Price;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class GetPriceController {
     private final Provider provider;
+    public static final String getPriceUri = "/get_price/";
+    public static final String getPriceErrorMessage = "Bad request";
 
     @Autowired
     public GetPriceController(Provider provider){
         this.provider = provider;
     }
 
-    @GetMapping("/get_price/{brand_id}/{product_id}/{date}")
+    @GetMapping(getPriceUri + "{brand_id}/{product_id}/{date}")
     public @ResponseBody
-    String get_price(@PathVariable(value = "brand_id") int brand_id,
-                     @PathVariable(value = "product_id") int product_id,
+    String get_price(@PathVariable(value = "brand_id") int brandId,
+                     @PathVariable(value = "product_id") int productId,
                      @PathVariable(value = "date") String date) {
         try {
-            Price price = provider.get_price(brand_id, product_id, date);
+            Price price = provider.get_price(brandId, productId, date);
             return price.toJsonObject();
         }catch (Exception e){
-            return "An unexpected error occurred: " + e.getMessage();
+            throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, getPriceErrorMessage, e);
         }
     }
 }
