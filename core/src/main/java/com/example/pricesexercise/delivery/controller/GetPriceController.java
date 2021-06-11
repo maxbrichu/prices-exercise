@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class GetPriceController {
+    private final Provider provider;
+
     @Autowired
-    Provider _provider = Provider.getInstance();
+    public GetPriceController(Provider provider){
+        this.provider = provider;
+    }
 
     @GetMapping("/get_price/{brand_id}/{product_id}/{datetime}")
     public @ResponseBody
     String get_price(@PathVariable(value = "brand_id") int brand_id,
                      @PathVariable(value = "product_id") int product_id,
-                     @PathVariable(value = "datetime") long datetime) {
-        Price price = _provider.get_price(brand_id, product_id, datetime);
+                     @PathVariable(value = "datetime") String date) {
+        Price price = provider.get_price(brand_id, product_id, date);
         return price.toJsonObject();
     }
 }

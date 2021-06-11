@@ -8,29 +8,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Provider {
-    private static Provider provider;
+    private final GetPrice getPrice;
 
     @Autowired
-    GetPrice getPrice;
-
     public Provider(GetPrice getPrice) {
-        provider = new Provider();
         this.getPrice = getPrice;
     }
 
-    public static synchronized Provider getInstance() {
-        if (provider == null) {
-            provider = new Provider();
-        }
-        return provider;
+    public Price get_price(int brand_id, int product_id, String date) {
+        return this.getPrice.execute(brand_id, product_id, date);
     }
 
-    public Provider(){
-        InMemoryPrices prices = new InMemoryPrices();
-        getPrice = new GetPrice(prices);
-    }
-
-    public Price get_price(int brand_id, int product_id, long datetime) {
-        return this.getPrice.execute(brand_id, product_id, datetime);
-    }
 }

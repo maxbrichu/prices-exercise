@@ -4,13 +4,14 @@ import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.infrastructure.repository.PricesRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class InMemoryPrices implements PricesRepository {
     List<Price> prices = new ArrayList<>();
 
     @Override
-    public Price get(int brand_id, int product_id, long datetime) {
+    public Price get(int brand_id, int product_id, Date datetime) {
         return prices.stream()
                 .filter(price -> price.has_ids(brand_id, product_id))
                 .findFirst()

@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import static com.example.pricesexercise.delivery.controller.PricesFixture.*;
@@ -31,18 +30,18 @@ class GetPriceTests {
     MvcResult mvcResult;
 
     @Test
-    void get_price_for_datetime_2020_06_14_10_00_successfully() throws Exception {
-        given_a_mocked_price_for_a_request(datetime_2020_06_14_10_00, a_price_2020_06_14_10_00);
-        when_get_price(datetime_2020_06_14_10_00);
-        then_get(a_price_2020_06_14_10_00);
+    void get_price_for_a_datetime_successfully() throws Exception {
+        given_a_mocked_price_for_a_request(a_datetime, a_price);
+        when_get_price(a_datetime);
+        then_get(a_price);
     }
 
-    private void given_a_mocked_price_for_a_request(long datetime, Price response) {
-        when(getPrice.execute(a_brand_id, a_product_id, datetime)).thenReturn(response);
+    private void given_a_mocked_price_for_a_request(String date, Price response) {
+        when(getPrice.execute(a_brand_id, a_product_id, date)).thenReturn(response);
     }
 
-    private void when_get_price(long datetime) throws Exception {
-        String uri = String.format("/get_price/%s/%s/%s", a_brand_id, a_product_id, datetime);
+    private void when_get_price(String date) throws Exception {
+        String uri = String.format("/get_price/%s/%s/%s", a_brand_id, a_product_id, date);
         mvcResult = mockMvc.perform(get(uri))
                 .andReturn();
     }

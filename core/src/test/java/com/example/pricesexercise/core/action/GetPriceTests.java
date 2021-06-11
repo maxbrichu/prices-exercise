@@ -27,8 +27,8 @@ public class GetPriceTests {
         getPrice = new GetPrice(prices);
     }
 
-    private void when_get_price(int a_brand_id, int a_product_id, long a_datetime) {
-        result = getPrice.execute(a_brand_id, a_product_id, a_datetime);
+    private void when_get_price(int brand_id, int product_id, String date) {
+        result = getPrice.execute(brand_id, product_id, date);
     }
 
     private void then_the_expected_result_is(Price expected_price) {
