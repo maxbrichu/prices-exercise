@@ -12,8 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static com.example.pricesexercise.delivery.controller.GetPriceController.getPriceErrorMessage;
-import static com.example.pricesexercise.delivery.controller.GetPriceController.getPriceUri;
+import static com.example.pricesexercise.delivery.controller.GetPriceController.GET_PRICE_ERROR_MESSAGE;
+import static com.example.pricesexercise.delivery.controller.GetPriceController.GET_PRICE_URI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,15 +35,15 @@ class GetPriceControllerTests {
 
     @Test
     void get_price_successfully() throws Exception {
-        given_a_mocked_price_for_a_request(aDate, aPrice);
-        when_get_price(aDate);
+        given_a_mocked_price_for_a_request(aStringDate, aPrice);
+        when_get_price(aStringDate);
         then_the_result_is(aPrice);
     }
 
     @Test
     void get_price_returns_an_error() throws Exception {
         when_get_price(anInvalidValue);
-        then_expected_error_is(getPriceErrorMessage);
+        then_expected_error_is(GET_PRICE_ERROR_MESSAGE);
     }
 
     private void given_a_mocked_price_for_a_request(String date, Price response) throws PriceException {
@@ -51,15 +51,15 @@ class GetPriceControllerTests {
     }
 
     private void when_get_price(String date) throws Exception {
-        String uri = String.format(getPriceUri + "%s/%s/%s", aBrandId, aProductId, date);
+        String uri = String.format(GET_PRICE_URI + "%s/%s/%s", aBrandId, aProductId, date);
         mvcResult = mockMvc.perform(get(uri))
                 .andReturn();
     }
 
-    private void then_the_result_is(Price expected_price) throws Exception {
+    private void then_the_result_is(Price expectedPrice) throws Exception {
         assertEquals(200, mvcResult.getResponse().getStatus());
         Price price = mapFromJson(mvcResult.getResponse().getContentAsString(), Price.class);
-        assertEquals(price, expected_price);
+        assertEquals(price, expectedPrice);
     }
 
     private void then_expected_error_is(String expectedError) {

@@ -3,7 +3,6 @@ package com.example.pricesexercise.core;
 import com.example.pricesexercise.core.action.GetPrice;
 import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.domain.PriceException;
-import com.example.pricesexercise.core.infrastructure.InMemoryPrices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -13,15 +13,15 @@ import org.springframework.web.server.ResponseStatusException;
 @Controller
 public class GetPriceController {
     private final Provider provider;
-    public static final String getPriceUri = "/get_price/";
-    public static final String getPriceErrorMessage = "Bad request";
+    public static final String GET_PRICE_URI = "/get_price/";
+    public static final String GET_PRICE_ERROR_MESSAGE = "Bad request";
 
     @Autowired
     public GetPriceController(Provider provider){
         this.provider = provider;
     }
 
-    @GetMapping(getPriceUri + "{brand_id}/{product_id}/{date}")
+    @GetMapping(GET_PRICE_URI + "{brand_id}/{product_id}/{date}")
     public @ResponseBody
     String get_price(@PathVariable(value = "brand_id") int brandId,
                      @PathVariable(value = "product_id") int productId,
@@ -31,7 +31,7 @@ public class GetPriceController {
             return price.toJsonObject();
         }catch (Exception e){
             throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, getPriceErrorMessage, e);
+                        HttpStatus.BAD_REQUEST, GET_PRICE_ERROR_MESSAGE, e);
         }
     }
 }

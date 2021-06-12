@@ -1,14 +1,12 @@
-package com.example.pricesexercise.core.infrastructure;
+package com.example.pricesexercise.core.infrastructure.repository;
 
 import com.example.pricesexercise.core.domain.Price;
-import com.example.pricesexercise.core.infrastructure.repository.PricesRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class InMemoryPrices implements PricesRepository {
-    List<Price> prices = new ArrayList<>();
+    ArrayList<Price> prices = new ArrayList<>();
 
     @Override
     public Price get(int brandId, int productId, Date date) {
@@ -21,5 +19,10 @@ public class InMemoryPrices implements PricesRepository {
     @Override
     public void add(Price price) {
         prices.add(price);
+    }
+
+    @Override
+    public ArrayList<Price> getAll() {
+        return prices;
     }
 }

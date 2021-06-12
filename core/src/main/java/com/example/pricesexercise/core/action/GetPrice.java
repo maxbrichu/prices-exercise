@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.stringToDate;
 
 @Service
 public class GetPrice {
@@ -20,9 +21,8 @@ public class GetPrice {
     }
 
     public Price execute(int brandId, int productId, String dateString ) throws PriceException {
-        SimpleDateFormat stringFormat = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss");
         try {
-            Date date = stringFormat.parse(dateString);
+            Date date = stringToDate(dateString);
             Price price = this.prices.get(brandId, productId, date);
             if (price == null) {
                 throw new PriceException("Not found");
