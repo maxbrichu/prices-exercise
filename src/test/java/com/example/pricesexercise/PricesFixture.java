@@ -11,8 +11,10 @@ import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dat
 public class PricesFixture {
 
     public static final int aBrandId = 1;
-    public static String aStringDate = "2020-06-14-00.00.00";
-    public static String anotherStringDate = "2020-12-31-23.59.59";
+    public static String aStringStartDate = "2020-06-14-00.00.00";
+    public static String aStringEndDate = "2020-12-31-23.59.59";
+    public static String anotherStringStartDate = "2020-06-14-15.00.00";
+    public static String anotherStringEndDate = "2020-06-14-18.30.00";
     public static int priceList = 1;
     public static final int aProductId = 35455;
     public static int aPriority = 0;
@@ -25,8 +27,8 @@ public class PricesFixture {
 
     static {
         try {
-            aPrice = new Price(aBrandId, dateStringToEpoch(aStringDate), dateStringToEpoch(anotherStringDate),
-                    priceList, aProductId, aPriority, aPriceValue, aCurrency);
+            aPrice = new Price(aBrandId, dateStringToEpoch(aStringStartDate),
+                    dateStringToEpoch(aStringEndDate), priceList, aProductId, aPriority, aPriceValue, aCurrency);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -36,8 +38,8 @@ public class PricesFixture {
 
     static {
         try {
-            anotherPrice = new Price(aBrandId, dateStringToEpoch(aStringDate), dateStringToEpoch(anotherStringDate),
-                    priceList, aProductId, aPriority, aPriceValue, aCurrency);
+            anotherPrice = new Price(aBrandId, dateStringToEpoch(anotherStringStartDate),
+                    dateStringToEpoch(anotherStringEndDate), priceList, aProductId, aPriority, aPriceValue, aCurrency);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@ package com.example.pricesexercise.core.infrastructure;
 
 import java.text.ParseException;
 
-import static com.example.pricesexercise.PricesFixture.aStringDate;
+import static com.example.pricesexercise.PricesFixture.aStringStartDate;
 import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToEpoch;
 
 public class PriceRepositoryFixture {
@@ -11,7 +11,7 @@ public class PriceRepositoryFixture {
 
     static {
         try {
-            aDateTime = dateStringToEpoch(aStringDate);
+            aDateTime = dateStringToEpoch(aStringStartDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }

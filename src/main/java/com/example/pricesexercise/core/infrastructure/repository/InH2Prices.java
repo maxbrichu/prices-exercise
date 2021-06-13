@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.List;
 
 public class InH2Prices implements PricesRepository {
 
@@ -21,17 +20,22 @@ public class InH2Prices implements PricesRepository {
     }
 
     @Override
-    public Price get(int brandId, int productId, long date) throws SQLException {
+    public List<Price> get(int brandId, int productId, long date) throws SQLException {
+        ArrayList<Price> prices = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement() ;
-            String sql = "SELECT * FROM PRICES";
-            ResultSet resultSet = stmt.executeQuery(sql);
-            while ( resultSet.next() ) {
-                Price price = resultToPrice(resultSet);
-                return price;
+            String sql = "SELECT * FROM PRICES" +
+                    " WHERE ENDDATE>=?" +
+                    " AND STARTDATE<=?";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.setLong(1, date );
+                preparedStatement.setLong(2, date );
+                ResultSet resultSet = preparedStatement.executeQuery() ;
+                while (resultSet.next()) {
+                    prices.add(resultToPrice(resultSet));
+                }
             }
         }
-        return null;
+        return prices;
     }
 
     private Price resultToPrice(ResultSet resultSet) throws SQLException {
@@ -50,7 +54,6 @@ public class InH2Prices implements PricesRepository {
     @Override
     public void add(Price price) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement();
             String sql = "INSERT INTO PRICES(brandId, startDate, endDate," +
                     " priceList, productId, priority, price, currency)" +
                     " VALUES (?,?,?,?,?,?,?,?)";
@@ -70,16 +73,26 @@ public class InH2Prices implements PricesRepository {
     }
 
     @Override
-    public ArrayList<Price> getAll() throws SQLException {
+    public List<Price> getAll() throws SQLException {
+        ArrayList<Price> prices = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             Statement stmt = conn.createStatement() ;
             String sql = "SELECT * FROM PRICES";
             ResultSet resultSet = stmt.executeQuery(sql);
             while ( resultSet.next() ) {
-                Price price = resultToPrice(resultSet);
-                return new ArrayList<>(Arrays.asList(price));
+                prices.add(resultToPrice(resultSet));
             }
         }
-        return null;
+        return prices;
+    }
+
+    @Override
+    public void truncate() throws SQLException {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "DELETE FROM PRICES";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                preparedStatement.execute();
+            }
+        }
     }
 }

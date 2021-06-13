@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToEpoch;
 
@@ -23,11 +27,8 @@ public class GetPrice {
     public Price execute(int brandId, int productId, String dateString ) throws PriceException {
         try {
             long dateTime = dateStringToEpoch(dateString);
-            Price price = this.prices.get(brandId, productId, dateTime);
-            if (price == null) {
-                throw new PriceException("Not found");
-            }
-            return price;
+            List<Price> pricesList = this.prices.get(brandId, productId, dateTime);
+            return decidePrice(pricesList);
         }
         catch (ParseException e){
             throw new PriceException("Invalid Date");
@@ -35,5 +36,15 @@ public class GetPrice {
         catch(SQLException e){
             throw new PriceException("DB Error");
         }
+    }
+
+    private Price decidePrice(List<Price> pricesList) throws PriceException {
+        Optional<Price> price = pricesList.stream()
+                .max(Comparator.comparing(Price::priority));
+        if (price.isPresent()){
+            return price.get();
+        }
+        throw new PriceException("Not found");
+
     }
 }

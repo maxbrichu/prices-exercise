@@ -37,8 +37,8 @@ class GetPriceControllerTests {
 
     @Test
     void get_price_successfully() throws Exception {
-        given_a_mocked_price_for_a_request(aStringDate, aPrice);
-        when_get_price(aStringDate);
+        given_a_mocked_price_for_a_request(aStringStartDate, aPrice);
+        when_get_price(aStringStartDate);
         then_the_result_is(aPrice);
     }
 

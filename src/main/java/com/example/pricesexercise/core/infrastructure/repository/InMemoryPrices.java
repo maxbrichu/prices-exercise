@@ -3,17 +3,18 @@ package com.example.pricesexercise.core.infrastructure.repository;
 import com.example.pricesexercise.core.domain.Price;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryPrices implements PricesRepository{
-    ArrayList<Price> prices = new ArrayList<>();
+    List<Price> prices = new ArrayList<>();
 
     @Override
-    public Price get(int brandId, int productId, long date) {
+    public List<Price> get(int brandId, int productId, long date) {
         return prices.stream()
                 .filter(price -> price.compareIds(brandId, productId))
-                .findFirst()
-                .orElse(null);
+                .filter(price -> (price.endDate() >= date) && (price.startDate() <= date))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -22,7 +23,12 @@ public class InMemoryPrices implements PricesRepository{
     }
 
     @Override
-    public ArrayList<Price> getAll() {
+    public List<Price> getAll() {
         return prices;
+    }
+
+    @Override
+    public void truncate() {
+        this.prices.clear();
     }
 }

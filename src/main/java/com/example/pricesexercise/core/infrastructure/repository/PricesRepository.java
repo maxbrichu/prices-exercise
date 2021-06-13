@@ -4,12 +4,12 @@ import com.example.pricesexercise.core.domain.Price;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface PricesRepository {
-    Price get(int brandId, int productId, long date) throws SQLException;
+    List<Price> get(int brandId, int productId, long date) throws SQLException;
     void add(Price price) throws SQLException;
-    ArrayList<Price> getAll() throws SQLException;
+    List<Price> getAll() throws SQLException;
+    void truncate() throws SQLException;
 }
