@@ -14,14 +14,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static com.example.pricesexercise.PricesFixture.*;
 import static com.example.pricesexercise.delivery.controller.GetPriceController.GET_PRICE_ERROR_MESSAGE;
 import static com.example.pricesexercise.delivery.controller.GetPriceController.GET_PRICE_URI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
-import static com.example.pricesexercise.PricesFixture.*;
-
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
