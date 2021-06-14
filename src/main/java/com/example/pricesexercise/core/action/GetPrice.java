@@ -4,6 +4,7 @@ import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.domain.PriceException;
 import com.example.pricesexercise.core.infrastructure.repository.PricesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToEpoch;
 
+@Lazy
 @Service
 public class GetPrice {
     private final PricesRepository prices;
@@ -29,11 +31,8 @@ public class GetPrice {
             List<Price> pricesList = this.prices.get(brandId, productId, dateTime);
             return decidePrice(pricesList);
         }
-        catch (ParseException e){
-            throw new PriceException("Invalid Date");
-        }
-        catch(SQLException e){
-            throw new PriceException("DB Error");
+        catch(Exception e){
+            throw new PriceException("An error occurred");
         }
     }
 

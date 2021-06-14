@@ -3,12 +3,14 @@ package com.example.pricesexercise.core.infrastructure.repository;
 
 import com.example.pricesexercise.core.domain.Price;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Lazy
 public class InH2Prices implements PricesRepository {
 
     private DataSource dataSource;

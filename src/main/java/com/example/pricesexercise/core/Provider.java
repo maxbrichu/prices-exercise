@@ -4,8 +4,10 @@ import com.example.pricesexercise.core.action.GetPrice;
 import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.domain.PriceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+@Lazy
 @Component
 public class Provider {
     private final GetPrice getPrice;

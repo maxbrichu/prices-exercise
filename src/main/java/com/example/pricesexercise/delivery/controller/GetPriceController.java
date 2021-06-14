@@ -3,6 +3,7 @@ package com.example.pricesexercise.delivery.controller;
 import com.example.pricesexercise.core.Provider;
 import com.example.pricesexercise.core.domain.Price;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class GetPriceController {
     public static final String GET_PRICE_URI = "/get_price/";
     public static final String GET_PRICE_ERROR_MESSAGE = "Bad request";
 
+    @Lazy
     @Autowired
     public GetPriceController(Provider provider){
         this.provider = provider;

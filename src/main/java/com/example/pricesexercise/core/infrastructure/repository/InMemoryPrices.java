@@ -1,11 +1,13 @@
 package com.example.pricesexercise.core.infrastructure.repository;
 
 import com.example.pricesexercise.core.domain.Price;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Lazy
 public class InMemoryPrices implements PricesRepository{
     List<Price> prices = new ArrayList<>();
 

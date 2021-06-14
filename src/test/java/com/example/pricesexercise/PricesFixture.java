@@ -23,27 +23,11 @@ public class PricesFixture {
 
     public static String anInvalidValue = "INVALID VALUE";
 
-    public static Price aPrice;
-
-    static {
-        try {
-            aPrice = new Price(aBrandId, dateStringToEpoch(aStringStartDate),
+    public static Price aPrice = new Price(aBrandId, dateStringToEpoch(aStringStartDate),
                     dateStringToEpoch(aStringEndDate), priceList, aProductId, aPriority, aPriceValue, aCurrency);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static Price anotherPrice;
-
-    static {
-        try {
-            anotherPrice = new Price(aBrandId, dateStringToEpoch(anotherStringStartDate),
+    public static Price anotherPrice = new Price(aBrandId, dateStringToEpoch(anotherStringStartDate),
                     dateStringToEpoch(anotherStringEndDate), priceList, aProductId, aPriority, aPriceValue, aCurrency);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static ArrayList<Price> somePrices = new ArrayList<>(Arrays.asList(aPrice, anotherPrice));
     public static ArrayList<Price> emptyPrices = new ArrayList<>();
