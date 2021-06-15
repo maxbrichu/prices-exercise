@@ -7,13 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToEpoch;
+import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToDate;
 
 @Lazy
 @Service
@@ -25,9 +24,9 @@ public class GetPrice {
         this.prices = prices;
     }
 
-    public Price execute(int brandId, int productId, String dateString ) throws PriceException {
+    public Price execute(int brandId, int productId, String stringDate ) throws PriceException {
         try {
-            long dateTime = dateStringToEpoch(dateString);
+            Date dateTime = dateStringToDate(stringDate);
             List<Price> pricesList = this.prices.get(brandId, productId, dateTime);
             return decidePrice(pricesList);
         }

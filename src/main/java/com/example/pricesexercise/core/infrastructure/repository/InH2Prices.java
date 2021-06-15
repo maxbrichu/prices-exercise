@@ -7,13 +7,16 @@ import org.springframework.context.annotation.Lazy;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.*;
 
 @Lazy
 public class InH2Prices implements PricesRepository {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Autowired
     public InH2Prices(DataSource dataSource) {
@@ -22,15 +25,17 @@ public class InH2Prices implements PricesRepository {
     }
 
     @Override
-    public List<Price> get(int brandId, int productId, long date) throws SQLException {
+    public List<Price> get(int brandId, int productId, java.util.Date date) throws Exception {
         ArrayList<Price> prices = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * FROM PRICES" +
-                    " WHERE ENDDATE>=?" +
-                    " AND STARTDATE<=?";
+                    " WHERE END_DATE>=PARSEDATETIME(?, ?)" +
+                    " AND START_DATE<=PARSEDATETIME(?, ?)";
             try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-                preparedStatement.setLong(1, date );
-                preparedStatement.setLong(2, date );
+                preparedStatement.setString(1, dateToString(date));
+                preparedStatement.setString(2, defaultFormat );
+                preparedStatement.setString(3, dateToString(date));
+                preparedStatement.setString(4, defaultFormat );
                 ResultSet resultSet = preparedStatement.executeQuery() ;
                 while (resultSet.next()) {
                     prices.add(resultToPrice(resultSet));
@@ -40,15 +45,15 @@ public class InH2Prices implements PricesRepository {
         return prices;
     }
 
-    private Price resultToPrice(ResultSet resultSet) throws SQLException {
-        int brandId = resultSet.getInt( "brandId" );
-        long startDate = resultSet.getLong( "startDate" );
-        long endDate = resultSet.getLong( "endDate" );
-        int priceList = resultSet.getInt( "priceList" );
-        int productId = resultSet.getInt( "productId" );
-        int priority = resultSet.getInt( "priority" );
-        float price = resultSet.getFloat( "price" );
-        String currency = resultSet.getString( "currency" );
+    private Price resultToPrice(ResultSet resultSet) throws SQLException, ParseException {
+        int brandId = resultSet.getInt( "BRAND_ID" );
+        java.util.Date startDate = dateStringToDate(resultSet.getString( "START_DATE" ), "yyyy-MM-dd HH:mm:ss");
+        java.util.Date endDate = dateStringToDate(resultSet.getString( "END_DATE" ), "yyyy-MM-dd HH:mm:ss");
+        int priceList = resultSet.getInt( "PRICE_LIST" );
+        int productId = resultSet.getInt( "PRODUCT_ID" );
+        int priority = resultSet.getInt( "PRIORITY" );
+        float price = resultSet.getFloat( "PRICE" );
+        String currency = resultSet.getString( "CURRENCY" );
         return new Price(brandId, startDate, endDate, priceList, productId,
                 priority, price, currency);
     }
@@ -56,18 +61,20 @@ public class InH2Prices implements PricesRepository {
     @Override
     public void add(Price price) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO PRICES(brandId, startDate, endDate," +
-                    " priceList, productId, priority, price, currency)" +
-                    " VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO PRICES(BRAND_ID, START_DATE, END_DATE," +
+                    " PRICE_LIST, PRODUCT_ID, PRIORITY, PRICE, CURRENCY)" +
+                    " VALUES (?,PARSEDATETIME(?,?),PARSEDATETIME(?,?),?,?,?,?,?)";
             try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
                 preparedStatement.setInt(1, price.brandId());
-                preparedStatement.setLong(2, price.startDate());
-                preparedStatement.setLong(3, price.endDate());
-                preparedStatement.setInt(4, price.priceList());
-                preparedStatement.setInt(5, price.productId());
-                preparedStatement.setInt(6, price.priority());
-                preparedStatement.setFloat(7, price.priceValue());
-                preparedStatement.setString(8, price.currency());
+                preparedStatement.setString(2, dateToString(price.startDate()));
+                preparedStatement.setString(3, defaultFormat);
+                preparedStatement.setString(4, dateToString(price.endDate()));
+                preparedStatement.setString(5, defaultFormat);
+                preparedStatement.setInt(6, price.priceList());
+                preparedStatement.setInt(7, price.productId());
+                preparedStatement.setInt(8, price.priority());
+                preparedStatement.setFloat(9, price.price());
+                preparedStatement.setString(10, price.currency());
 
                 preparedStatement.executeUpdate();
             }
@@ -75,7 +82,7 @@ public class InH2Prices implements PricesRepository {
     }
 
     @Override
-    public List<Price> getAll() throws SQLException {
+    public List<Price> getAll() throws Exception {
         ArrayList<Price> prices = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             Statement stmt = conn.createStatement() ;

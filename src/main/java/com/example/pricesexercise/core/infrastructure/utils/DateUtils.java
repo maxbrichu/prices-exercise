@@ -1,15 +1,22 @@
 package com.example.pricesexercise.core.infrastructure.utils;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DateUtils {
-    public static long dateStringToEpoch(String dateString) {
-        LocalDateTime dateTime = LocalDateTime.parse(formatDateString(dateString));
-        return dateTime.toEpochSecond(ZoneOffset.UTC);
+    public static String defaultFormat = "yyyy-MM-dd-HH.mm.ss";
+    public static Date dateStringToDate(String dateString) throws ParseException {
+        return new SimpleDateFormat(defaultFormat).parse(dateString);
     }
 
-    private static CharSequence formatDateString(String dateString) {
-        return dateString.substring(0,10) + "T" + dateString.substring(11).replace(".", ":");
+    public static Date dateStringToDate(String dateString, String format) throws ParseException {
+        return new SimpleDateFormat(format).parse(dateString);
+    }
+
+    public static String dateToString(Date date){
+        DateFormat df = new SimpleDateFormat(defaultFormat);
+        return df.format(date);
     }
 }

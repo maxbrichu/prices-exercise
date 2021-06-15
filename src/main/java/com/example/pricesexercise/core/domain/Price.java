@@ -1,36 +1,40 @@
 package com.example.pricesexercise.core.domain;
 
+import java.util.Date;
+
+import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateToString;
+
 public class Price {
 
     private final int brandId;
-    private final long startDate;
-    private final long endDate;
+    private final Date startDate;
+    private final Date endDate;
     private final int priceList;
     private final int productId;
     private final int priority;
-    private final float priceValue;
+    private final float price;
     private final String currency;
 
-    public Price(int brandId, long startDate, long endDate, int priceList,
-                 int productId, int priority, float priceValue, String currency) {
+    public Price(int brandId, Date startDate, Date endDate, int priceList,
+                 int productId, int priority, float price, String currency) {
         this.brandId = brandId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.priceList = priceList;
         this.productId = productId;
         this.priority = priority;
-        this.priceValue = priceValue;
+        this.price = price;
         this.currency = currency;
     }
 
     public String toJsonObject() {
-        return "{" +
-            "brandId:" + brandId + "," +
-            "startDate:" + startDate + "," +
-            "endDate:" + endDate + "," +
-            "productId:" + productId + "," +
-            "priceValue:" + priceValue + "," +
-            "currency:" + currency +
+        return "{\n" +
+            "brandId:" + brandId + ",\n" +
+            "startDate:" + dateToString(startDate) + ",\n" +
+            "endDate:" + dateToString(endDate) + ",\n" +
+            "productId:" + productId + ",\n" +
+            "price:" + price + ",\n" +
+            "currency:" + currency + "\n" +
         "}";
     }
 
@@ -52,19 +56,19 @@ public class Price {
         return (this.brandId == brandId) && (this.productId == productId);
     }
 
-    public boolean compareDates(long startDate, long endDate){
-        return this.startDate == startDate && this.endDate == endDate;
+    public boolean compareDates(Date startDate, Date endDate){
+        return this.startDate.equals(startDate) && this.endDate.equals(endDate);
     }
 
     public int brandId() {
         return brandId;
     }
 
-    public long startDate() {
+    public Date startDate() {
         return this.startDate;
     }
 
-    public long endDate() {
+    public Date endDate() {
         return this.endDate;
     }
 
@@ -80,8 +84,8 @@ public class Price {
         return priority;
     }
 
-    public float priceValue() {
-        return this.priceValue;
+    public float price() {
+        return this.price;
     }
 
     public String currency() {

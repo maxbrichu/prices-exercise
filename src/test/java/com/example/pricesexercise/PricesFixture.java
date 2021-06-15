@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToEpoch;
+import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToDate;
 
 public class PricesFixture {
 
@@ -23,11 +23,27 @@ public class PricesFixture {
 
     public static String anInvalidValue = "INVALID VALUE";
 
-    public static Price aPrice = new Price(aBrandId, dateStringToEpoch(aStringStartDate),
-                    dateStringToEpoch(aStringEndDate), priceList, aProductId, aPriority, aPriceValue, aCurrency);
+    public static Price aPrice;
 
-    public static Price anotherPrice = new Price(aBrandId, dateStringToEpoch(anotherStringStartDate),
-                    dateStringToEpoch(anotherStringEndDate), priceList, aProductId, aPriority, aPriceValue, aCurrency);
+    static {
+        try {
+            aPrice = new Price(aBrandId, dateStringToDate(aStringStartDate), dateStringToDate(aStringEndDate),
+                    priceList, aProductId, aPriority, aPriceValue, aCurrency);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Price anotherPrice;
+
+    static {
+        try {
+            anotherPrice = new Price(aBrandId, dateStringToDate(anotherStringStartDate), dateStringToDate(anotherStringEndDate),
+                    priceList, aProductId, aPriority, aPriceValue, aCurrency);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static ArrayList<Price> somePrices = new ArrayList<>(Arrays.asList(aPrice, anotherPrice));
     public static ArrayList<Price> emptyPrices = new ArrayList<>();

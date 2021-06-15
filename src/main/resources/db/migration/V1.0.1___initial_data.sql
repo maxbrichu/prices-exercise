@@ -1,4 +1,12 @@
-INSERT INTO PRICES VALUES (1, 1592092800, 1609459199, 1, 35455, 0, 35.50, 'EUR');
-INSERT INTO PRICES VALUES (1, 1592146800, 1592159400, 2, 35455, 1, 25.45, 'EUR');
-INSERT INTO PRICES VALUES (1, 1592179200, 1592218800, 3, 35455, 1, 30.50, 'EUR');
-INSERT INTO PRICES VALUES (1, 1592236800, 1609459199, 4, 35455, 1, 38.95, 'EUR');
+INSERT INTO PRICES VALUES (1, PARSEDATETIME('2020-06-14-00.00.00', 'yyyy-MM-dd-HH.mm.ss'),
+                           PARSEDATETIME('2020-12-31-23.59.59', 'yyyy-MM-dd-HH.mm.ss'),
+                           1, 35455, 0, 35.50, 'EUR');
+INSERT INTO PRICES VALUES (1, PARSEDATETIME('2020-06-14-15.00.00', 'yyyy-MM-dd-HH.mm.ss'),
+                           PARSEDATETIME('2020-06-14-18.30.00', 'yyyy-MM-dd-HH.mm.ss'),
+                           1, 35455, 0, 35.50, 'EUR');
+INSERT INTO PRICES VALUES (1, PARSEDATETIME('2020-06-15-00.00.00', 'yyyy-MM-dd-HH.mm.ss'),
+                           PARSEDATETIME('2020-06-15-11.00.00', 'yyyy-MM-dd-HH.mm.ss'),
+                           1, 35455, 0, 35.50, 'EUR');
+INSERT INTO PRICES VALUES (1, PARSEDATETIME('2020-06-15-16.00.00', 'yyyy-MM-dd-HH.mm.ss'),
+                           PARSEDATETIME('2020-12-31-23.59.59', 'yyyy-MM-dd-HH.mm.ss'),
+                           1, 35455, 0, 35.50, 'EUR');

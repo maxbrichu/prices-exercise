@@ -3,7 +3,6 @@ package com.example.pricesexercise.delivery.controller;
 import com.example.pricesexercise.core.action.GetPrice;
 import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.domain.PriceException;
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,17 +57,12 @@ class GetPriceControllerTests {
 
     private void then_the_result_is(Price expectedPrice) throws Exception {
         assertEquals(200, mvcResult.getResponse().getStatus());
-        Price price = mapFromJson(mvcResult.getResponse().getContentAsString(), Price.class);
-        assertEquals(price, expectedPrice);
+        assertEquals(expectedPrice.toJsonObject(), mvcResult.getResponse().getContentAsString());
     }
 
     private void then_expected_error_is(String expectedError) {
         assertEquals(400, mvcResult.getResponse().getStatus());
         assertEquals(expectedError, mvcResult.getResponse().getErrorMessage());
-    }
-    protected <T> T mapFromJson(String json, Class<T> clazz) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, clazz);
     }
 }
 
