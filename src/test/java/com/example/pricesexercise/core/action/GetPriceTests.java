@@ -17,10 +17,24 @@ public class GetPriceTests {
     GetPrice getPrice;
 
     @Test
-    void get_price_successfully() throws PriceException {
+    void get_a_price_when_there_is_no_priority() throws PriceException {
         given_stored_prices(somePrices);
         when_get_price(aBrandId, aProductId, aStringStartDate);
         then_the_expected_result_is(aPrice);
+    }
+
+    @Test
+    void get_high_priority_price_matching_on_started_day() throws PriceException {
+        given_stored_prices(somePrices);
+        when_get_price(aBrandId, aProductId, anotherStringStartDate);
+        then_the_expected_result_is(aHighPriorityPrice);
+    }
+
+    @Test
+    void get_high_priority_price_matching_on_ended_day() throws PriceException {
+        given_stored_prices(somePrices);
+        when_get_price(aBrandId, aProductId, anotherStringEndDate);
+        then_the_expected_result_is(aHighPriorityPrice);
     }
 
     @Test

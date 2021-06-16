@@ -17,7 +17,8 @@ public class PricesFixture {
     public static String anotherStringEndDate = "2020-06-14-18.30.00";
     public static int priceList = 1;
     public static final int aProductId = 35455;
-    public static int aPriority = 0;
+    public static int highPriority = 1;
+    public static int lowPriority = 0;
     public static float aPriceValue = 35.5f;
     public static String aCurrency = "EUR";
 
@@ -28,24 +29,24 @@ public class PricesFixture {
     static {
         try {
             aPrice = new Price(aBrandId, dateStringToDate(aStringStartDate), dateStringToDate(aStringEndDate),
-                    priceList, aProductId, aPriority, aPriceValue, aCurrency);
+                    priceList, aProductId, lowPriority, aPriceValue, aCurrency);
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
-    public static Price anotherPrice;
+    public static Price aHighPriorityPrice;
 
     static {
         try {
-            anotherPrice = new Price(aBrandId, dateStringToDate(anotherStringStartDate), dateStringToDate(anotherStringEndDate),
-                    priceList, aProductId, aPriority, aPriceValue, aCurrency);
+            aHighPriorityPrice = new Price(aBrandId, dateStringToDate(anotherStringStartDate), dateStringToDate(anotherStringEndDate),
+                    priceList, aProductId, highPriority, aPriceValue, aCurrency);
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
-    public static ArrayList<Price> somePrices = new ArrayList<>(Arrays.asList(aPrice, anotherPrice));
+    public static ArrayList<Price> somePrices = new ArrayList<>(Arrays.asList(aPrice, aHighPriorityPrice));
     public static ArrayList<Price> emptyPrices = new ArrayList<>();
 
 }
