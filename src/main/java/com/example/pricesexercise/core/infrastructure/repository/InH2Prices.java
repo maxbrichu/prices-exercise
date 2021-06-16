@@ -30,12 +30,16 @@ public class InH2Prices implements PricesRepository {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * FROM PRICES" +
                     " WHERE END_DATE>=PARSEDATETIME(?, ?)" +
-                    " AND START_DATE<=PARSEDATETIME(?, ?)";
+                    " AND START_DATE<=PARSEDATETIME(?, ?)" +
+                    " AND BRAND_ID=?" +
+                    " AND PRODUCT_ID=?";
             try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
                 preparedStatement.setString(1, dateToString(date));
                 preparedStatement.setString(2, defaultFormat );
                 preparedStatement.setString(3, dateToString(date));
                 preparedStatement.setString(4, defaultFormat );
+                preparedStatement.setInt(5, brandId );
+                preparedStatement.setInt(6, productId );
                 ResultSet resultSet = preparedStatement.executeQuery() ;
                 while (resultSet.next()) {
                     prices.add(resultToPrice(resultSet));
