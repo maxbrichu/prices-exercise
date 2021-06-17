@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class GetPrice {
 
     public Price execute(int brandId, int productId, String stringDate ) throws PriceException {
         try {
-            Date dateTime = dateStringToDate(stringDate);
+            LocalDateTime dateTime = dateStringToDate(stringDate);
             List<Price> pricesList = this.prices.get(brandId, productId, dateTime);
             return decidePrice(pricesList);
         }

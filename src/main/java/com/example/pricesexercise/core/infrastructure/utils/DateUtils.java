@@ -3,20 +3,23 @@ package com.example.pricesexercise.core.infrastructure.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DateUtils {
     public static String defaultFormat = "yyyy-MM-dd-HH.mm.ss";
-    public static Date dateStringToDate(String dateString) throws ParseException {
-        return new SimpleDateFormat(defaultFormat).parse(dateString);
+    public static LocalDateTime dateStringToDate(String dateString) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(defaultFormat);
+        return LocalDateTime.parse(dateString, formatter);
     }
 
-    public static Date dateStringToDate(String dateString, String format) throws ParseException {
-        return new SimpleDateFormat(format).parse(dateString);
+    public static LocalDateTime dateStringToDate(String dateString, String format) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return LocalDateTime.parse(dateString, formatter);
     }
 
-    public static String dateToString(Date date){
-        DateFormat df = new SimpleDateFormat(defaultFormat);
-        return df.format(date);
+    public static String dateToString(LocalDateTime date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(defaultFormat);
+        return  date.format(formatter);
     }
 }

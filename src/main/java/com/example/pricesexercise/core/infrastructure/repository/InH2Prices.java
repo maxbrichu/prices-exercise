@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class InH2Prices implements PricesRepository {
     }
 
     @Override
-    public List<Price> get(int brandId, int productId, java.util.Date date) throws Exception {
+    public List<Price> get(int brandId, int productId, LocalDateTime date) throws Exception {
         ArrayList<Price> prices = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT * FROM PRICES" +
@@ -51,8 +52,8 @@ public class InH2Prices implements PricesRepository {
 
     private Price resultToPrice(ResultSet resultSet) throws SQLException, ParseException {
         int brandId = resultSet.getInt( "BRAND_ID" );
-        java.util.Date startDate = dateStringToDate(resultSet.getString( "START_DATE" ), "yyyy-MM-dd HH:mm:ss");
-        java.util.Date endDate = dateStringToDate(resultSet.getString( "END_DATE" ), "yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDate = dateStringToDate(resultSet.getString( "START_DATE" ), "yyyy-MM-dd HH:mm:ss");
+        LocalDateTime endDate = dateStringToDate(resultSet.getString( "END_DATE" ), "yyyy-MM-dd HH:mm:ss");
         int priceList = resultSet.getInt( "PRICE_LIST" );
         int productId = resultSet.getInt( "PRODUCT_ID" );
         int priority = resultSet.getInt( "PRIORITY" );

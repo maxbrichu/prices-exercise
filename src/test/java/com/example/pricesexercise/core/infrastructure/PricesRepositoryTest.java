@@ -4,6 +4,7 @@ import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.infrastructure.repository.InH2Prices;
 import com.example.pricesexercise.core.infrastructure.repository.InMemoryPrices;
 import com.example.pricesexercise.core.infrastructure.repository.PricesRepository;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,7 +109,7 @@ public abstract class PricesRepositoryTest<T extends PricesRepository> {
         repository.add(price);
     }
 
-    private void when_get_price(int brandId, int productId, Date date) throws Exception {
+    private void when_get_price(int brandId, int productId, LocalDateTime date) throws Exception {
         result = repository.get(brandId, productId, date);
     }
 

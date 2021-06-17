@@ -3,6 +3,7 @@ package com.example.pricesexercise.core.infrastructure.repository;
 import com.example.pricesexercise.core.domain.Price;
 import org.springframework.context.annotation.Lazy;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +16,11 @@ public class InMemoryPrices implements PricesRepository{
     List<Price> prices = new ArrayList<>();
 
     @Override
-    public List<Price> get(int brandId, int productId, Date date) {
+    public List<Price> get(int brandId, int productId, LocalDateTime date) {
         return prices.stream()
                 .filter(price -> price.compareIds(brandId, productId))
-                .filter(price -> (price.endDate().after(date) || price.endDate().equals(date))  &&
-                        price.startDate().before(date) || price.startDate().equals(date))
+                .filter(price -> (price.endDate().isAfter(date) || price.endDate().equals(date))  &&
+                        price.startDate().isBefore(date) || price.startDate().equals(date))
                 .collect(Collectors.toList());
     }
 

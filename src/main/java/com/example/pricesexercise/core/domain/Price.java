@@ -1,5 +1,6 @@
 package com.example.pricesexercise.core.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateToString;
@@ -7,15 +8,15 @@ import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dat
 public class Price {
 
     private final int brandId;
-    private final Date startDate;
-    private final Date endDate;
+    private final LocalDateTime startDate;
+    private final LocalDateTime endDate;
     private final int priceList;
     private final int productId;
     private final int priority;
     private final float price;
     private final String currency;
 
-    public Price(int brandId, Date startDate, Date endDate, int priceList,
+    public Price(int brandId, LocalDateTime startDate, LocalDateTime endDate, int priceList,
                  int productId, int priority, float price, String currency) {
         this.brandId = brandId;
         this.startDate = startDate;
@@ -56,7 +57,7 @@ public class Price {
         return (this.brandId == brandId) && (this.productId == productId);
     }
 
-    public boolean compareDates(Date startDate, Date endDate){
+    public boolean compareDates(LocalDateTime startDate, LocalDateTime endDate){
         return this.startDate.equals(startDate) && this.endDate.equals(endDate);
     }
 
@@ -64,11 +65,11 @@ public class Price {
         return brandId;
     }
 
-    public Date startDate() {
+    public LocalDateTime startDate() {
         return this.startDate;
     }
 
-    public Date endDate() {
+    public LocalDateTime endDate() {
         return this.endDate;
     }
 
