@@ -4,18 +4,15 @@ import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.domain.PriceException;
 import com.example.pricesexercise.core.infrastructure.repository.PricesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToDate;
 
-@Lazy
 @Service
 public class GetPrice {
     private final PricesRepository prices;
