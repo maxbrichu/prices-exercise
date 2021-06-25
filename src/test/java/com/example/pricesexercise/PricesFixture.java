@@ -25,7 +25,6 @@ public class PricesFixture {
     public static String anInvalidValue = "INVALID VALUE";
 
     public static Price aPrice;
-
     static {
         try {
             aPrice = new Price(aBrandId, dateStringToDate(aStringStartDate), dateStringToDate(aStringEndDate),
@@ -49,4 +48,6 @@ public class PricesFixture {
     public static ArrayList<Price> somePrices = new ArrayList<>(Arrays.asList(aPrice, aHighPriorityPrice));
     public static ArrayList<Price> emptyPrices = new ArrayList<>();
 
+
+    public static String successfullyUpsertMessage = "Upsert successfully";
 }
