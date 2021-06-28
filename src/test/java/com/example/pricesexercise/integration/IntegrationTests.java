@@ -1,24 +1,10 @@
 package com.example.pricesexercise.integration;
 
-import com.example.pricesexercise.core.action.GetPrice;
 import com.example.pricesexercise.core.domain.Price;
-import com.example.pricesexercise.core.infrastructure.config.ApplicationConfig;
-import com.example.pricesexercise.core.infrastructure.repository.InH2Prices;
-import com.example.pricesexercise.core.infrastructure.repository.PricesRepository;
-import com.example.pricesexercise.delivery.controller.GetPriceController;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,7 +16,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
-
 import java.io.UnsupportedEncodingException;
 
 import static com.example.pricesexercise.PricesFixture.*;

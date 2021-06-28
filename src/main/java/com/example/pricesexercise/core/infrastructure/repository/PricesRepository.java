@@ -11,6 +11,7 @@ import java.util.List;
 public interface PricesRepository {
     List<Price> get(int brandId, int productId, LocalDateTime date) throws Exception;
     void add(Price price) throws SQLException;
+    void upsert(Price price) throws Exception;
     List<Price> getAll() throws Exception;
     void truncate() throws SQLException;
 }

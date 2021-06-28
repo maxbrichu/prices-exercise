@@ -1,11 +1,9 @@
 package com.example.pricesexercise.delivery.controller;
 
-import com.example.pricesexercise.core.Provider;
 import com.example.pricesexercise.core.action.GetPrice;
 import com.example.pricesexercise.core.domain.Price;
 import com.example.pricesexercise.core.domain.PriceException;
 import com.example.pricesexercise.core.infrastructure.config.ApplicationConfig;
-import com.example.pricesexercise.integration.TestApplicationConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static com.example.pricesexercise.PricesFixture.*;
-import static com.example.pricesexercise.delivery.controller.GetPriceController.GET_PRICE_ERROR_MESSAGE;
 import static com.example.pricesexercise.delivery.controller.GetPriceController.GET_PRICE_URI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -47,7 +44,7 @@ class GetPriceControllerTests {
     @Test
     void get_price_returns_an_error() throws Exception {
         when_get_price(anInvalidValue);
-        then_expected_error_is(GET_PRICE_ERROR_MESSAGE);
+        then_expected_error_is();
     }
 
     private void given_a_mocked_price_for_a_request(String date, Price response) throws PriceException {
@@ -65,9 +62,9 @@ class GetPriceControllerTests {
         assertEquals(expectedPrice.toJsonObject(), mvcResult.getResponse().getContentAsString());
     }
 
-    private void then_expected_error_is(String expectedError) {
+    private void then_expected_error_is() {
         assertEquals(400, mvcResult.getResponse().getStatus());
-        assertEquals(expectedError, mvcResult.getResponse().getErrorMessage());
+        assertEquals(GetPriceController.GET_PRICE_ERROR_MESSAGE, mvcResult.getResponse().getErrorMessage());
     }
 }
 

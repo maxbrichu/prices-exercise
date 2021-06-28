@@ -5,8 +5,10 @@ import com.example.pricesexercise.core.domain.Price;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToDate;
+import static com.example.pricesexercise.core.infrastructure.utils.FileUtils.loadFromCSV;
 
 public class PricesFixture {
 
@@ -49,5 +51,6 @@ public class PricesFixture {
     public static ArrayList<Price> emptyPrices = new ArrayList<>();
 
 
-    public static String successfullyUpsertMessage = "Upsert successfully";
+    public static String aFilePath = "./src/test/resources/files/prices.csv";
+    public static List<Price> filePrices = loadFromCSV(aFilePath, Price::new);
 }

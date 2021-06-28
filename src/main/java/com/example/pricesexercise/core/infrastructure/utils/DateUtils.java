@@ -1,8 +1,6 @@
 package com.example.pricesexercise.core.infrastructure.utils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

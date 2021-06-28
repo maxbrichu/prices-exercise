@@ -26,6 +26,21 @@ public class InMemoryPrices implements PricesRepository{
     }
 
     @Override
+    public void upsert(Price price){
+        if (prices.stream().anyMatch(price::equals)) {
+            update(price);
+        } else {
+            add(price);
+        }
+    }
+
+    private void update(Price price) {
+        prices.stream()
+            .filter(price::equals)
+            .forEach(filteredPrice -> filteredPrice.update(price));
+    }
+
+    @Override
     public List<Price> getAll() {
         return prices;
     }

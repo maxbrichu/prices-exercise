@@ -1,20 +1,20 @@
 package com.example.pricesexercise.core.domain;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
+import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateStringToDate;
 import static com.example.pricesexercise.core.infrastructure.utils.DateUtils.dateToString;
 
 public class Price {
 
     private final int brandId;
-    private final LocalDateTime startDate;
-    private final LocalDateTime endDate;
-    private final int priceList;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private int priceList;
     private final int productId;
-    private final int priority;
-    private final float price;
-    private final String currency;
+    private int priority;
+    private float price;
+    private String currency;
 
     public Price(int brandId, LocalDateTime startDate, LocalDateTime endDate, int priceList,
                  int productId, int priority, float price, String currency) {
@@ -26,6 +26,23 @@ public class Price {
         this.priority = priority;
         this.price = price;
         this.currency = currency;
+    }
+
+    public Price(String[] attributes) {
+        this.brandId = Integer.parseInt(attributes[0]);
+        try {
+            this.startDate = dateStringToDate(attributes[1]);
+            this.endDate = dateStringToDate(attributes[2]);
+        } catch (Exception ignored){
+            this.startDate = null;
+            this.endDate = null;
+        }
+
+        this.priceList = Integer.parseInt(attributes[3]);
+        this.productId = Integer.parseInt(attributes[4]);
+        this.priority  = Integer.parseInt(attributes[5]);
+        this.price  = Float.parseFloat(attributes[6]);
+        this.currency= attributes[7];
     }
 
     public String toJsonObject() {
@@ -91,5 +108,12 @@ public class Price {
 
     public String currency() {
         return this.currency;
+    }
+
+    public void update(Price price) {
+        this.priceList = price.priceList;
+        this.priority = price.priority;
+        this.price = price.price;
+        this.currency = price.currency;
     }
 }
